@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PostaWEB - Track & Send Packages</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body { background: #f5f6fa; color: #2c2c2a; line-height: 1.6; }
+
+  /* ===== NAVBAR ===== */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: #fff; border-bottom: 1px solid #e1e1e1;
+    padding: 16px 40px; display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000;
+  }
+  .logo { font-size: 22px; font-weight: 600; color: #185fa5; cursor: pointer; }
+  .logo span { color: #d85a30; }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: #444; font-weight: 500; cursor: pointer;
+    padding: 8px 14px; border-radius: 6px; transition: 0.2s;
+  }
+  .nav-links a:hover { background: #f0f4f9; color: #185fa5; }
+  .nav-links .account-btn {
+    background: #185fa5; color: #fff;
+  }
+  .nav-links .account-btn:hover { background: #0c447c; color: #fff; }
+
+  /* ===== PAGE LAYOUT ===== */
+  .page { display: none; min-height: 100vh; padding-top: 70px; }
+  .page.active { display: block; }
+
+  /* ===== HOME / TRACKING SECTION ===== */
+  .hero {
+    min-height: 90vh;
+    background: linear-gradient(135deg, #185fa5 0%, #378add 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 40px 20px;
+  }
+  .hero h1 { font-size: 48px; margin-bottom: 12px; font-weight: 600; }
+  .hero p { font-size: 18px; margin-bottom: 40px; opacity: 0.95; }
+
+  .track-box {
+    background: #fff; padding: 30px; border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    width: 100%; max-width: 600px;
+  }
+  .track-box h2 { color: #2c2c2a; margin-bottom: 20px; font-size: 22px; }
+  .track-input-group { display: flex; gap: 10px; }
+  .track-input-group input {
+    flex: 1; padding: 14px 16px; border: 1px solid #d3d1c7;
+    border-radius: 8px; font-size: 15px;
+  }
+  .track-input-group input:focus { outline: none; border-color: #185fa5; }
+  .btn {
+    padding: 14px 28px; background: #185fa5; color: #fff;
+    border: none; border-radius: 8px; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: 0.2s;
+  }
+  .btn:hover { background: #0c447c; }
+  .btn-secondary { background: #d85a30; }
+  .btn-secondary:hover { background: #993c1d; }
+  .btn-outline { background: transparent; border: 1px solid #d3d1c7; color: #444; }
+  .btn-outline:hover { background: #f0f4f9; }
+
+  .send-package-btn {
+    margin-top: 20px; background: #d85a30; padding: 16px 40px; font-size: 16px;
+  }
+  .send-package-btn:hover { background: #993c1d; }
+
+  /* ===== ABOUT SECTION ===== */
+  .section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .section h2 { font-size: 36px; margin-bottom: 30px; color: #185fa5; text-align: center; }
+  .section-subtitle { text-align: center; color: #5f5e5a; margin-bottom: 50px; font-size: 17px; }
+
+  .about-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px; margin-top: 40px;
+  }
+  .about-card {
+    background: #fff; padding: 30px; border-radius: 12px;
+    border: 1px solid #e1e1e1; text-align: center;
+  }
+  .about-card .icon {
+    width: 60px; height: 60px; background: #e6f1fb; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px; font-size: 28px; color: #185fa5;
+  }
+  .about-card h3 { margin-bottom: 12px; color: #2c2c2a; }
+  .about-card p { color: #5f5e5a; font-size: 14px; }
+
+  /* ===== CONTACT SECTION ===== */
+  .contact-section { background: #fff; }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;
+  }
+  .contact-form, .feedback-form {
+    background: #f5f6fa; padding: 30px; border-radius: 12px;
+  }
+  .contact-form h3, .feedback-form h3 { margin-bottom: 20px; color: #185fa5; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; margin-bottom: 6px; font-weight: 500; font-size: 14px; color: #444;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 12px; border: 1px solid #d3d1c7;
+    border-radius: 8px; font-size: 14px; font-family: inherit;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    outline: none; border-color: #185fa5;
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .stars { display: flex; gap: 4px; font-size: 24px; color: #ef9f27; cursor: pointer; }
+  .stars span:hover { transform: scale(1.2); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: #2c2c2a; color: #fff; padding: 40px; text-align: center;
+  }
+  .footer p { opacity: 0.7; font-size: 14px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 2000;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px; padding: 30px;
+    max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
+    position: relative;
+  }
+  .modal-large { max-width: 700px; }
+  .modal-close {
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; font-size: 24px; cursor: pointer; color: #888;
+  }
+  .modal h2 { margin-bottom: 20px; color: #185fa5; }
+  .modal-tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #e1e1e1; }
+  .modal-tab {
+    flex: 1; padding: 12px; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 500; color: #888; border-bottom: 2px solid transparent;
+  }
+  .modal-tab.active { color: #185fa5; border-bottom-color: #185fa5; }
+
+  /* ===== ACCOUNT DROPDOWN ===== */
+  .account-dropdown {
+    display: none;
+    position: absolute; top: 70px; right: 40px;
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    width: 280px; z-index: 1500;
+  }
+  .account-dropdown.active { display: block; }
+  .account-info { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .avatar {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #185fa5; color: #fff; display: flex;
+    align-items: center; justify-content: center; font-weight: 600; font-size: 18px;
+  }
+  .account-info .name { font-weight: 600; }
+  .account-info .email { font-size: 13px; color: #888; }
+  .account-menu { display: flex; flex-direction: column; gap: 4px; }
+  .account-menu a {
+    padding: 10px; text-decoration: none; color: #444;
+    border-radius: 6px; font-size: 14px;
+  }
+  .account-menu a:hover { background: #f0f4f9; }
+
+  /* ===== ADMIN DASHBOARD ===== */
+  .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 70px); }
+  .admin-sidebar {
+    background: #2c2c2a; color: #fff; padding: 30px 0;
+  }
+  .admin-sidebar h3 { padding: 0 20px 20px; font-size: 14px; opacity: 0.6; text-transform: uppercase; }
+  .admin-menu a {
+    display: block; padding: 14px 20px; color: #fff; text-decoration: none;
+    cursor: pointer; border-left: 3px solid transparent;
+  }
+  .admin-menu a:hover, .admin-menu a.active {
+    background: rgba(255,255,255,0.1); border-left-color: #378add;
+  }
+  .admin-content { padding: 30px 40px; }
+  .admin-content h1 { margin-bottom: 20px; color: #185fa5; }
+
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 30px;
+  }
+  .stat-card {
+    background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e1e1e1;
+  }
+  .stat-card .label { font-size: 13px; color: #888; margin-bottom: 6px; }
+  .stat-card .value { font-size: 28px; font-weight: 600; color: #185fa5; }
+  .stat-card.green .value { color: #639922; }
+  .stat-card.orange .value { color: #d85a30; }
+  .stat-card.red .value { color: #e24b4a; }
+
+  table {
+    width: 100%; background: #fff; border-radius: 8px; overflow: hidden;
+    border: 1px solid #e1e1e1; border-collapse: collapse;
+  }
+  th, td { padding: 14px; text-align: left; border-bottom: 1px solid #e1e1e1; font-size: 14px; }
+  th { background: #f5f6fa; font-weight: 600; color: #444; }
+  tr:last-child td { border-bottom: none; }
+  .badge {
+    padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 500;
+  }
+  .badge-success { background: #eaf3de; color: #3b6d11; }
+  .badge-warning { background: #faeeda; color: #854f0b; }
+  .badge-info { background: #e6f1fb; color: #185fa5; }
+  .badge-danger { background: #fceaeb; color: #a32d2d; }
+  .table-actions { display: flex; gap: 6px; }
+  .table-actions button {
+    padding: 6px 10px; font-size: 12px; border: 1px solid #d3d1c7;
+    background: #fff; border-radius: 4px; cursor: pointer;
+  }
+  .table-actions button:hover { background: #f0f4f9; }
+  .table-actions .delete { color: #e24b4a; border-color: #f7c1c1; }
+
+  /* ===== SHIPPING LABEL ===== */
+  .shipping-label {
+    background: #fff; border: 2px dashed #2c2c2a; padding: 25px;
+    margin: 20px 0; font-family: 'Courier New', monospace;
+  }
+  .shipping-label .label-header {
+    display: flex; justify-content: space-between;
+    border-bottom: 2px solid #2c2c2a; padding-bottom: 10px; margin-bottom: 15px;
+  }
+  .shipping-label .barcode {
+    font-size: 32px; letter-spacing: 2px; text-align: center;
+    background: #2c2c2a; color: #fff; padding: 12px; margin: 15px 0;
+  }
+  .shipping-label .addresses { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .shipping-label .addr-block strong { display: block; margin-bottom: 6px; font-size: 11px; }
+  .shipping-label .tracking-num {
+    text-align: center; font-size: 18px; font-weight: bold; margin-top: 15px;
+  }
+
+  /* ===== TRACKING RESULT ===== */
+  .tracking-result {
+    background: #fff; padding: 20px; border-radius: 8px; margin-top: 16px;
+    border: 1px solid #e1e1e1; text-align: left; display: none;
+  }
+  .tracking-result.active { display: block; }
+  .tracking-timeline { margin-top: 20px; }
+  .timeline-step {
+    display: flex; gap: 14px; padding: 10px 0; position: relative;
+  }
+  .timeline-dot {
+    width: 14px; height: 14px; border-radius: 50%; background: #d3d1c7;
+    margin-top: 4px; flex-shrink: 0;
+  }
+  .timeline-step.done .timeline-dot { background: #639922; }
+  .timeline-step.current .timeline-dot { background: #185fa5; box-shadow: 0 0 0 4px #e6f1fb; }
+  .timeline-info .status { font-weight: 600; font-size: 14px; }
+  .timeline-info .date { font-size: 12px; color: #888; }
+
+  /* Hide page padding when on hero */
+  .home-page { padding-top: 70px; }
+
+  @media (max-width: 768px) {
+    .navbar { padding: 14px 20px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { padding: 6px 10px; font-size: 14px; }
+    .hero h1 { font-size: 32px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .admin-layout { grid-template-columns: 1fr; }
+    .admin-sidebar { padding: 14px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="logo" onclick="goToPage('home')">Posta<span>WEB</span></div>
+  <div class="nav-links">
+    <a onclick="goToPage('home'); scrollToSection('home-top')">Home</a>
+    <a onclick="goToPage('home'); scrollToSection('about')">About Us</a>
+    <a onclick="goToPage('home'); scrollToSection('contact')">Contact Us</a>
+    <a class="account-btn" onclick="handleAccountClick(event)">Account</a>
+  </div>
+</nav>
+
+<!-- ===== ACCOUNT DROPDOWN (visible only when logged in) ===== -->
+<div class="account-dropdown" id="accountDropdown">
+  <div class="account-info">
+    <div class="avatar" id="avatarLetter">U</div>
+    <div>
+      <div class="name" id="accountName">User Name</div>
+      <div class="email" id="accountEmail">user@email.com</div>
+    </div>
+  </div>
+  <div class="account-menu">
+    <a onclick="goToPage('userDashboard'); closeDropdown()">My Packages</a>
+    <a onclick="openModal('packageFormModal'); closeDropdown()">Send a Package</a>
+    <a onclick="goToPage('home'); closeDropdown()">Settings</a>
+    <a onclick="logout()" style="color:#e24b4a;">Log Out</a>
+  </div>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page home-page active" id="home">
+  <!-- Hero / Tracking Section -->
+  <section class="hero" id="home-top">
+    <h1>Track Your Package</h1>
+    <p>Fast, reliable, and easy package tracking & shipping worldwide.</p>
+    <div class="track-box">
+      <h2>Enter Your Tracking Number</h2>
+      <div class="track-input-group">
+        <input type="text" id="trackingInput" placeholder="e.g. PW123456789AL">
+        <button class="btn" onclick="trackPackage()">Track</button>
+      </div>
+      <div class="tracking-result" id="trackingResult">
+        <h3 style="color:#185fa5; margin-bottom:8px;">Package #PW123456789AL</h3>
+        <p style="color:#5f5e5a; font-size:14px;">Estimated delivery: <strong>May 6, 2026</strong></p>
+        <div class="tracking-timeline">
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div class="timeline-info">
+              <div class="status">Package received</div>
+              <div class="date">May 2, 2026 – 09:14</div>
+            </div>
+          </div>
+          <div class="timeline-step done">
+            <div class="timeline-dot"></div>
+            <div class="timeline-info">
+              <div class="status">Departed origin facility</div>
+              <div class="date">May 3, 2026 – 16:42</div>
+            </div>
+          </div>
+          <div class="timeline-step current">
+            <div class="timeline-dot"></div>
+            <div class="timeline-info">
+              <div class="status">In transit – Tirana hub</div>
+              <div class="date">May 4, 2026 – 11:20</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div class="timeline-info">
+              <div class="status">Out for delivery</div>
+              <div class="date">Pending</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-dot"></div>
+            <div class="timeline-info">
+              <div class="status">Delivered</div>
+              <div class="date">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn send-package-btn" onclick="handleSendPackage()">📦 Send a Package</button>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="section" id="about">
+    <h2>About Us</h2>
+    <p class="section-subtitle">Your trusted partner for global shipping and tracking.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Express shipping options to over 200 countries with real-time tracking updates.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🔒</div>
+        <h3>Secure & Reliable</h3>
+        <p>Every package is insured and handled with care. Pay safely with card.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">📍</div>
+        <h3>Live Tracking</h3>
+        <p>Track every step from pickup to delivery with detailed status updates.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🏷️</div>
+        <h3>Print Labels</h3>
+        <p>Generate shipping labels instantly. Print and stick on your package.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="section contact-section" id="contact">
+    <h2>Contact Us</h2>
+    <p class="section-subtitle">Get in touch or leave us your feedback.</p>
+    <div class="contact-grid">
+      <div class="contact-form">
+        <h3>Send us an Email</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" placeholder="What can we help with?">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Type your message..."></textarea>
+        </div>
+        <button class="btn" onclick="alert('Email sent! (demo)')">Send Email</button>
+      </div>
+      <div class="feedback-form">
+        <h3>Leave a Review</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="stars" id="starRating">
+            <span onclick="setRating(1)">☆</span>
+            <span onclick="setRating(2)">☆</span>
+            <span onclick="setRating(3)">☆</span>
+            <span onclick="setRating(4)">☆</span>
+            <span onclick="setRating(5)">☆</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Your Feedback</label>
+          <textarea placeholder="Tell us about your experience..."></textarea>
+        </div>
+        <button class="btn btn-secondary" onclick="alert('Review submitted! (demo)')">Submit Review</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 PostaWEB. All rights reserved. | Demo mockup</p>
+  </footer>
+</div>
+
+<!-- ===== USER DASHBOARD PAGE ===== -->
+<div class="page" id="userDashboard">
+  <section class="section">
+    <h2 style="text-align:left;">My Packages</h2>
+    <p style="color:#5f5e5a; margin-bottom:30px;">View and manage your shipments.</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="label">Total Sent</div><div class="value">12</div></div>
+      <div class="stat-card green"><div class="label">Delivered</div><div class="value">9</div></div>
+      <div class="stat-card orange"><div class="label">In Transit</div><div class="value">2</div></div>
+      <div class="stat-card"><div class="label">Pending</div><div class="value">1</div></div>
+    </div>
+    <button class="btn btn-secondary" style="margin-bottom:20px;" onclick="openModal('packageFormModal')">+ Send New Package</button>
+    <table>
+      <thead>
+        <tr><th>Tracking #</th><th>Recipient</th><th>Destination</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PW123456789AL</strong></td><td>Anna Doe</td><td>Berlin, DE</td>
+          <td><span class="badge badge-info">In Transit</span></td><td>May 2, 2026</td>
+          <td><div class="table-actions"><button>Track</button><button>Label</button></div></td>
+        </tr>
+        <tr>
+          <td><strong>PG987654321AL</strong></td><td>Mark Smith</td><td>Rome, IT</td>
+          <td><span class="badge badge-success">Delivered</span></td><td>Apr 28, 2026</td>
+          <td><div class="table-actions"><button>Details</button></div></td>
+        </tr>
+        <tr>
+          <td><strong>PG555444333AL</strong></td><td>Lisa Brown</td><td>Paris, FR</td>
+          <td><span class="badge badge-warning">Pending Pickup</span></td><td>May 4, 2026</td>
+          <td><div class="table-actions"><button>Track</button><button>Label</button></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<!-- ===== ADMIN DASHBOARD PAGE ===== -->
+<div class="page" id="adminDashboard">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <h3>Admin Panel</h3>
+      <div class="admin-menu">
+        <a class="active" onclick="showAdminSection('orders', this)">📦 Manage Orders</a>
+        <a onclick="showAdminSection('users', this)">👥 Manage Users</a>
+        <a onclick="showAdminSection('reviews', this)">⭐ Reviews</a>
+        <a onclick="showAdminSection('analytics', this)">📊 Analytics</a>
+        <a onclick="showAdminSection('settings', this)">⚙️ Settings</a>
+        <a onclick="logout()" style="color:#f09595; margin-top:20px;">🚪 Logout</a>
+      </div>
+    </aside>
+    <main class="admin-content">
+      <!-- Orders Section -->
+      <div id="admin-orders" class="admin-section">
+        <h1>Manage Orders</h1>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="label">Total Orders</div><div class="value">1,247</div></div>
+          <div class="stat-card green"><div class="label">Delivered</div><div class="value">1,089</div></div>
+          <div class="stat-card orange"><div class="label">In Transit</div><div class="value">132</div></div>
+          <div class="stat-card red"><div class="label">Issues</div><div class="value">26</div></div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Tracking #</th><th>Sender</th><th>Recipient</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>PW123456789AL</strong></td><td>John Doe</td><td>Anna Doe (DE)</td>
+              <td><span class="badge badge-info">In Transit</span></td><td>May 2, 2026</td>
+              <td><div class="table-actions"><button>View</button><button>Edit</button><button class="delete">Cancel</button></div></td>
+            </tr>
+            <tr>
+              <td><strong>PG987654321AL</strong></td><td>Jane Doe</td><td>Mark Smith (IT)</td>
+              <td><span class="badge badge-success">Delivered</span></td><td>Apr 28, 2026</td>
+              <td><div class="table-actions"><button>View</button><button>Edit</button></div></td>
+            </tr>
+            <tr>
+              <td><strong>PG111222333AL</strong></td><td>Mike R.</td><td>Sara K. (US)</td>
+              <td><span class="badge badge-danger">Issue</span></td><td>May 1, 2026</td>
+              <td><div class="table-actions"><button>View</button><button>Resolve</button></div></td>
+            </tr>
+            <tr>
+              <td><strong>PG555444333AL</strong></td><td>Lisa B.</td><td>Pierre M. (FR)</td>
+              <td><span class="badge badge-warning">Pending</span></td><td>May 4, 2026</td>
+              <td><div class="table-actions"><button>View</button><button>Edit</button><button class="delete">Cancel</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Users Section -->
+      <div id="admin-users" class="admin-section" style="display:none;">
+        <h1>Manage Users</h1>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="label">Total Users</div><div class="value">5,421</div></div>
+          <div class="stat-card green"><div class="label">Active</div><div class="value">4,892</div></div>
+          <div class="stat-card orange"><div class="label">New (week)</div><div class="value">87</div></div>
+          <div class="stat-card red"><div class="label">Banned</div><div class="value">12</div></div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Role</th><th>Packages</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>John Doe</td><td>john@email.com</td><td><span class="badge badge-info">User</span></td><td>12</td><td><span class="badge badge-success">Active</span></td>
+              <td><div class="table-actions"><button>Edit</button><button class="delete">Ban</button></div></td></tr>
+            <tr><td>Jane Smith</td><td>jane@email.com</td><td><span class="badge badge-info">User</span></td><td>5</td><td><span class="badge badge-success">Active</span></td>
+              <td><div class="table-actions"><button>Edit</button><button class="delete">Ban</button></div></td></tr>
+            <tr><td>Admin Master</td><td>admin@postaweb.al</td><td><span class="badge badge-danger">Admin</span></td><td>—</td><td><span class="badge badge-success">Active</span></td>
+              <td><div class="table-actions"><button>Edit</button></div></td></tr>
+            <tr><td>Spammer X</td><td>spam@bad.com</td><td><span class="badge badge-info">User</span></td><td>0</td><td><span class="badge badge-danger">Banned</span></td>
+              <td><div class="table-actions"><button>Unban</button><button class="delete">Delete</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reviews Section -->
+      <div id="admin-reviews" class="admin-section" style="display:none;">
+        <h1>User Reviews</h1>
+        <table>
+          <thead><tr><th>User</th><th>Rating</th><th>Comment</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td>John D.</td><td>★★★★★</td><td>Fast and reliable service!</td><td>May 1, 2026</td>
+              <td><div class="table-actions"><button>Approve</button><button class="delete">Hide</button></div></td></tr>
+            <tr><td>Sara K.</td><td>★★★★☆</td><td>Good but tracking could be more detailed.</td><td>Apr 30, 2026</td>
+              <td><div class="table-actions"><button>Approve</button><button class="delete">Hide</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Analytics Section -->
+      <div id="admin-analytics" class="admin-section" style="display:none;">
+        <h1>Analytics</h1>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="label">Revenue (month)</div><div class="value">€42,180</div></div>
+          <div class="stat-card green"><div class="label">Delivery rate</div><div class="value">98.2%</div></div>
+          <div class="stat-card orange"><div class="label">Avg delivery</div><div class="value">2.4d</div></div>
+          <div class="stat-card"><div class="label">Customer satisfaction</div><div class="value">4.7/5</div></div>
+        </div>
+        <p style="color:#5f5e5a; margin-top:20px;">[Charts and graphs would be displayed here in the final version]</p>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="admin-settings" class="admin-section" style="display:none;">
+        <h1>Settings</h1>
+        <p style="color:#5f5e5a;">System settings, pricing tiers, regions, etc. would be managed here.</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== LOGIN MODAL ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchAuthTab('login', this)">Login</button>
+      <button class="modal-tab" onclick="switchAuthTab('register', this)">Create Account</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+      <h2>Welcome Back</h2>
+      <p style="color:#5f5e5a; margin-bottom:20px; font-size:14px;">Login to send and track your packages.</p>
+      <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+      <p style="font-size:12px; color:#888; margin-bottom:12px;">💡 Try <strong>admin@postaweb.al</strong> to see admin view</p>
+      <button class="btn" style="width:100%;" onclick="login()">Login</button>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerForm" style="display:none;">
+      <h2>Create Your Account</h2>
+      <p style="color:#5f5e5a; margin-bottom:20px; font-size:14px;">Join PostaWEB today.</p>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Doe"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+355 ..."></div>
+      <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+      <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••"></div>
+      <button class="btn" style="width:100%;" onclick="register()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PACKAGE FORM MODAL ===== -->
+<div class="modal-overlay" id="packageFormModal">
+  <div class="modal modal-large">
+    <button class="modal-close" onclick="closeModal('packageFormModal')">&times;</button>
+    <h2>Send a Package</h2>
+    <p style="color:#5f5e5a; margin-bottom:20px; font-size:14px;">Fill in the details below.</p>
+
+    <h3 style="margin-bottom:12px; color:#444; font-size:16px;">📤 Sender Info</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Doe"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+355 ..."></div>
+    </div>
+    <div class="form-group"><label>Pickup Address</label><input type="text" placeholder="Street, City, Country"></div>
+
+    <h3 style="margin:20px 0 12px; color:#444; font-size:16px;">📥 Recipient Info</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Anna Doe"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="+49 ..."></div>
+    </div>
+    <div class="form-group"><label>Delivery Address</label><input type="text" placeholder="Street, City, Country"></div>
+
+    <h3 style="margin:20px 0 12px; color:#444; font-size:16px;">📦 Package Details</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+      <div class="form-group"><label>Weight (kg)</label><input type="number" placeholder="2.5"></div>
+      <div class="form-group"><label>Size</label><select><option>Small</option><option>Medium</option><option>Large</option></select></div>
+      <div class="form-group"><label>Type</label><select><option>Standard</option><option>Fragile</option><option>Document</option></select></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea placeholder="Brief description of contents"></textarea></div>
+    <div class="form-group"><label>Shipping Speed</label>
+      <select>
+        <option>Standard (3-5 days) - €8.99</option>
+        <option>Express (1-2 days) - €19.99</option>
+        <option>Overnight - €34.99</option>
+      </select>
+    </div>
+
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px;" onclick="proceedToPayment()">Proceed to Payment →</button>
+  </div>
+</div>
+
+<!-- ===== PAYMENT MODAL ===== -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('paymentModal')">&times;</button>
+    <h2>💳 Payment</h2>
+    <div style="background:#f5f6fa; padding:16px; border-radius:8px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Shipping</span><span>€8.99</span></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Insurance</span><span>€2.00</span></div>
+      <div style="display:flex; justify-content:space-between; font-weight:600; padding-top:8px; border-top:1px solid #d3d1c7;"><span>Total</span><span style="color:#185fa5;">€10.99</span></div>
+    </div>
+    <div class="form-group"><label>Cardholder Name</label><input type="text" placeholder="John Doe"></div>
+    <div class="form-group"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456"></div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-group"><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
+      <div class="form-group"><label>CVV</label><input type="text" placeholder="123"></div>
+    </div>
+    <button class="btn" style="width:100%;" onclick="completePayment()">Pay €10.99 & Generate Label</button>
+  </div>
+</div>
+
+<!-- ===== SHIPPING LABEL MODAL ===== -->
+<div class="modal-overlay" id="labelModal">
+  <div class="modal modal-large">
+    <button class="modal-close" onclick="closeModal('labelModal')">&times;</button>
+    <h2>✅ Payment Successful — Your Shipping Label</h2>
+    <p style="color:#5f5e5a; margin-bottom:16px; font-size:14px;">Print this label and stick it on your package.</p>
+    <div class="shipping-label">
+      <div class="label-header">
+        <div><strong style="font-size:18px;">POSTAWEB</strong><br><span style="font-size:11px;">EXPRESS SHIPPING</span></div>
+        <div style="text-align:right; font-size:11px;">DATE: 04/05/2026<br>WEIGHT: 2.5KG</div>
+      </div>
+      <div class="addresses">
+        <div class="addr-block">
+          <strong>FROM:</strong>
+          John Doe<br>
+          Rruga Myslym Shyri<br>
+          Tirana 1001, Albania<br>
+          +355 69 123 4567
+        </div>
+        <div class="addr-block">
+          <strong>TO:</strong>
+          Anna Doe<br>
+          Hauptstraße 25<br>
+          10115 Berlin, Germany<br>
+          +49 30 1234 5678
+        </div>
+      </div>
+      <div class="barcode">||| || ||| | ||| || ||||| ||</div>
+      <div class="tracking-num">PW123456789AL</div>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn" style="flex:1;" onclick="alert('Label downloaded as PDF (demo)')">⬇️ Download PDF</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="alert('Label sent to your email (demo)')">📧 Email Label</button>
+      <button class="btn btn-outline" style="flex:1;" onclick="window.print()">🖨️ Print</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== STATE =====
+  let isLoggedIn = false;
+  let isAdmin = false;
+  let currentUser = { name: '', email: '' };
+
+  // ===== PAGE NAVIGATION =====
+  function goToPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function scrollToSection(id) {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // ===== MODALS =====
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+
+  // ===== AUTH =====
+  function switchAuthTab(tab, btn) {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+  }
+
+  function login() {
+    const email = document.getElementById('loginEmail').value || 'user@email.com';
+    isLoggedIn = true;
+    isAdmin = email.includes('admin');
+    currentUser = {
+      name: isAdmin ? 'Admin Master' : 'John Doe',
+      email: email
+    };
+    updateAccountUI();
+    closeModal('loginModal');
+    if (isAdmin) {
+      goToPage('adminDashboard');
+    } else {
+      goToPage('userDashboard');
+    }
+  }
+
+  function register() {
+    isLoggedIn = true;
+    isAdmin = false;
+    currentUser = { name: 'New User', email: 'newuser@email.com' };
+    updateAccountUI();
+    closeModal('loginModal');
+    goToPage('userDashboard');
+  }
+
+  function logout() {
+    isLoggedIn = false;
+    isAdmin = false;
+    currentUser = { name: '', email: '' };
+    closeDropdown();
+    goToPage('home');
+  }
+
+  function updateAccountUI() {
+    if (isLoggedIn) {
+      document.getElementById('accountName').textContent = currentUser.name;
+      document.getElementById('accountEmail').textContent = currentUser.email;
+      document.getElementById('avatarLetter').textContent = currentUser.name.charAt(0);
+      document.querySelector('.account-btn').textContent = currentUser.name.split(' ')[0];
+    } else {
+      document.querySelector('.account-btn').textContent = 'Account';
+    }
+  }
+
+  function handleAccountClick(e) {
+    e.stopPropagation();
+    if (isLoggedIn) {
+      document.getElementById('accountDropdown').classList.toggle('active');
+    } else {
+      openModal('loginModal');
+    }
+  }
+
+  function closeDropdown() {
+    document.getElementById('accountDropdown').classList.remove('active');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.account-dropdown') && !e.target.closest('.account-btn')) {
+      closeDropdown();
+    }
+  });
+
+  // ===== SEND PACKAGE =====
+  function handleSendPackage() {
+    if (!isLoggedIn) {
+      openModal('loginModal');
+    } else {
+      openModal('packageFormModal');
+    }
+  }
+
+  function proceedToPayment() {
+    closeModal('packageFormModal');
+    openModal('paymentModal');
+  }
+
+  function completePayment() {
+    closeModal('paymentModal');
+    openModal('labelModal');
+  }
+
+  // ===== TRACKING =====
+  function trackPackage() {
+    const val = document.getElementById('trackingInput').value.trim();
+    if (!val) {
+      alert('Please enter a tracking number');
+      return;
+    }
+    document.getElementById('trackingResult').classList.add('active');
+  }
+
+  // ===== REVIEW STARS =====
+  function setRating(n) {
+    const stars = document.querySelectorAll('#starRating span');
+    stars.forEach((s, i) => s.textContent = i < n ? '★' : '☆');
+  }
+
+  // ===== ADMIN =====
+  function showAdminSection(section, btn) {
+    document.querySelectorAll('.admin-menu a').forEach(a => a.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+    document.getElementById('admin-' + section).style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
