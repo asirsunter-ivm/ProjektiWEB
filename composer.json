@@ -1,6 +1,7 @@
 {
-    "name": "darli23/postaweb",
     "require": {
-        "phpmailer/phpmailer": "^7.1"
+        "phpmailer/phpmailer": "^7.1",
+        "tecnickcom/tcpdf": "^6.11",
+        "endroid/qr-code": "^4.8"
     }
 }

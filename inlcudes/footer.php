@@ -1,7 +1,7 @@
-﻿<footer class="footer">
+<footer class="footer">
     <div class="footer-container">
         <div class="footer-section">
-            <h3>PostaWeb</h3>
+            <h3>📦 PostaWeb</h3>
             <p>Modern postal and package tracking platform.</p>
         </div>
         <div class="footer-section">
@@ -14,8 +14,8 @@
         </div>
         <div class="footer-section">
             <h4>Contact</h4>
-            <p>postaweb.finiteloop@gmail.com</p>
-            <p>Tirane, Shqiperi</p>
+            <p>📧 postaweb.finiteloop@gmail.com</p>
+            <p>📍 Tirane, Shqiperi</p>
         </div>
     </div>
     <div class="footer-bottom">
@@ -23,6 +23,7 @@
     </div>
 </footer>
 
+<!-- LOGIN MODAL -->
 <div id="loginModal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
@@ -45,6 +46,7 @@
     </div>
 </div>
 
+<!-- REGISTER MODAL -->
 <div id="registerModal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
@@ -63,7 +65,7 @@
                 <input type="text" name="phone">
             </div>
             <div class="form-group">
-                <label>Fjalekalimi</label>
+                <label>Fjalekalimi (min 8 karaktere)</label>
                 <input type="password" name="password" required minlength="8">
             </div>
             <p id="registerError" class="error-msg" style="display:none;"></p>
