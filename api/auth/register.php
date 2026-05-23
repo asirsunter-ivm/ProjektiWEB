@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../includes/mailer.php';
 require_once __DIR__ . '/../../includes/db.php';
 require_once __DIR__ . '/../../includes/session.php';
 require_once __DIR__ . '/../../includes/crypto.php';
@@ -51,7 +52,16 @@ $stmt = $pdo->prepare(
 $stmt->execute([$full_name, $email, $password_hash, $phone_encrypted, $city_id_val]);
  
 $userId = $pdo->lastInsertId();
- 
+require_once __DIR__ . '/../../includes/mailer.php';
+
+$body = emailTemplate('Miresevini ne PostaWeb!', "
+    <p>Pershendetje <strong>{$full_name}</strong>,</p>
+    <p>Llogaria juaj u krijua me sukses.</p>
+    <p><strong>Email:</strong> {$email}</p>
+    <br>
+    <a href='".SITE_URL."' style='background:#1F4E79;color:white;padding:10px 20px;text-decoration:none;border-radius:5px;display:inline-block;'>Hyr tani</a>
+");
+sendEmail($email, 'Miresevini ne PostaWeb!', $body);
 // Krijo sesion
 session_regenerate_id(true);
 $_SESSION['user_id']   = $userId;

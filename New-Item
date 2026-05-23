@@ -1,0 +1,15 @@
+<?php
+// test_email.php
+
+// 1. Tërheqim motorrin e mailer-it që krijuam
+require_once 'includes/mailer.php';
+
+
+$result = sendEmail('darliselman@gmail.com', 'Test PostaWeb', '<h1>Funksionon!</h1> <p>Ky është një email testues nga PostaWeb App.</p>');
+
+// 3. Shfaqim rezultatin në ekran
+if ($result) {
+    echo 'Email u dërgua me sukses! Kontrollo kutinë e mesazheve (Inbox ose Spam).';
+} else {
+    echo 'Dërgimi dështoi! Kontrollo loget e gabimeve te C:\xampp\php\logs\php_error.log';
+}

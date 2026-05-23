@@ -16,8 +16,8 @@ define('PAYPAL_MODE',      'sandbox'); // ndrysho ne 'live' per prodhim
  
 // SMTP (Gmail)
 define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_USER', 'postaweb.finiteloop@gmail.com');
-define('SMTP_PASS', 'VENDOS_KETU_APP_PASSWORD');
+define('SMTP_USER', 'darliselman@gmail.com');
+define('SMTP_PASS', 'gqzq ytvf anwa jila');
 define('SMTP_PORT', 587);
  
 // Site

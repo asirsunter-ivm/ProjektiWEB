@@ -1,0 +1,6 @@
+{
+    "name": "darli23/postaweb",
+    "require": {
+        "phpmailer/phpmailer": "^7.1"
+    }
+}
