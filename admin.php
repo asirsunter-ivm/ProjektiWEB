@@ -232,17 +232,17 @@ $(document).ready(function() {
                 return;
             }
             var html = '';
-            res.messages.forEach(function(m) {
-                html += '<tr>' +
-                    '<td>' + m.name + '</td>' +
-                    '<td>' + m.email + '</td>' +
-                    '<td>' + (m.subject || '-') + '</td>' +
-                    '<td>' + m.message.substring(0, 100) + '...</td>' +
-                    '<td>' + m.created_at + '</td>' +
-                    '<td>' + (m.is_read == 1 ? 'Lexuar' : 'I ri') + '</td>' +
-                    '</tr>';
-            });
-            $('#messagesTableBody').html(html);
+           $('#messagesTableBody').empty();
+res.messages.forEach(function(m) {
+    var $tr = $('<tr></tr>');
+    $tr.append($('<td></td>').text(m.name));
+    $tr.append($('<td></td>').text(m.email));
+    $tr.append($('<td></td>').text(m.subject || '-'));
+    $tr.append($('<td></td>').text(m.message.substring(0, 100) + '...'));
+    $tr.append($('<td></td>').text(m.created_at));
+    $tr.append($('<td></td>').text(m.is_read == 1 ? 'Lexuar' : 'I ri'));
+    $('#messagesTableBody').append($tr);
+});
         });
     }
 

@@ -206,3 +206,4 @@ INSERT INTO notifications (user_id, title, message) VALUES
 
 INSERT INTO contact_messages (name, email, subject, message) VALUES
 ('Vizitor Test', 'vizitor@example.com', 'Pyetje per cmime', 'Sa kushton dergesa nga Tirana ne Prishtine?');
+
