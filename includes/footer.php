@@ -2,10 +2,10 @@
     <div class="footer-container">
         <div class="footer-section">
             <h3>PostaWeb</h3>
-            <p>Modern postal and package tracking platform.</p>
+           <p>Ne jemi nje platforme dixhitale e dedikuar per te thjeshtuar menaxhimin dhe ndjekjen e pakove tuaja. I frymezuar nga modelet me te mira globale si 'Parcel', website-i jone bashkon sherbimet e koriereve te ndryshem ne nje vend te vetem. Misioni jone eshte t'ju ofrojme nje eksperience te shpejte, te sigurt dhe ne kohe reale, duke bere qe kontrolli i dergesave tuaja te jete vetem nje klikim larg.</p>
         </div>
         <div class="footer-section">
-            <h4>Quick Links</h4>
+            <h4>Akses i Lehte</h4>
             <ul>
                 <li><a href="index.php#hero">Home</a></li>
                 <li><a href="index.php#about">About Us</a></li>
@@ -13,8 +13,9 @@
             </ul>
         </div>
         <div class="footer-section">
-            <h4>Contact</h4>
+            <h4>Kontakte</h4>
             <p>postaweb.finiteloop@gmail.com</p>
+	    <p>+355 69 234 5678</p>
             <p>Tirane, Shqiperi</p>
         </div>
     </div>

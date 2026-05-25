@@ -20,8 +20,8 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="dashboard-container">
-    <h1>Admin Panel</h1>
-    <p style="color:#666;">Mireseardhja, <?= htmlspecialchars($_SESSION['full_name']) ?></p>
+    <h1 style="margin-top: 30px;">Admin Panel</h1>
+    <p style="color:#666;">Mireserdhe, <?= htmlspecialchars($_SESSION['full_name']) ?></p>
 
     <div class="stats-grid">
         <div class="stat-card">
@@ -72,7 +72,7 @@ require_once __DIR__ . '/includes/header.php';
                     <tr>
                         <th>Kodi</th>
                         <th>Dergues</th>
-                        <th>Destinatari</th>
+                        <th>Destinacioni</th>
                         <th>Tipi</th>
                         <th>Kosto</th>
                         <th>Statusi</th>
@@ -136,18 +136,20 @@ require_once __DIR__ . '/includes/header.php';
 <div id="statusModal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2>Perdiyteso Statusin</h2>
+        <h2>Perditeso Statusin</h2>
         <input type="hidden" id="updatePackageId">
         <div class="form-group">
             <label>Statusi i ri</label>
             <select id="newStatus">
-                <option value="picked_up">I marre</option>
+		<option value="paid">Paguar</option>
+                <option value="picked_up">I marr</option>
                 <option value="in_transit">Ne tranzit</option>
                 <option value="out_for_delivery">Ne dorezim</option>
                 <option value="delivered">Dorezuar</option>
                 <option value="returned">Kthyer</option>
                 <option value="cancelled">Anuluar</option>
             </select>
+		    
         </div>
         <div class="form-group">
             <label>Vendndodhja</label>
@@ -196,7 +198,7 @@ $(document).ready(function() {
                     '<td>' + p.status_label + '</td>' +
                     '<td>' + paymentBadge + '</td>' +
                     '<td>' + p.created_at + '</td>' +
-                    '<td><button class="btn-update" data-id="' + p.id + '">Perdiyteso</button></td>' +
+                    '<td><button class="btn-update" data-id="' + p.id + '">Perditeso</button></td>' +
                     '</tr>';
             });
             $('#packagesTableBody').html(html);
@@ -252,15 +254,15 @@ res.messages.forEach(function(m) {
     });
 
     $('#saveStatusBtn').on('click', function() {
-        var data = {
-            package_id: $('#updatePackageId').val(),
-            status: $('#newStatus').val(),
-            location: $('#updateLocation').val(),
-            note: $('#updateNote').val()
-        };
+    var data = {
+        package_id: $('#updatePackageId').val(),
+        status: $('#newStatus').val(),
+        location: $('#updateLocation').val(),
+        note: $('#updateNote').val(),
+    };
         $.post('api/packages/update-status.php', data, function(res) {
             if (res.success) {
-                alert('Statusi u perdiytesua!');
+                alert('Statusi u perditesua!');
                 $('#statusModal').fadeOut();
                 loadPackages();
             } else {

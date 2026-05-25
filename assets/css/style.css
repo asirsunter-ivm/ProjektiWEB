@@ -908,3 +908,128 @@ textarea {
         flex-direction: column;
     }
 }
+/* Fix tabelat */
+.packages-table {
+    background: white;
+    color: #333;
+}
+.packages-table th {
+    background: #1F4E79 !important;
+    color: white !important;
+}
+.packages-table td {
+    background: white !important;
+    color: #333 !important;
+}
+.packages-table tr:hover td {
+    background: #f8f9fa !important;
+}
+.packages-table a {
+    color: #1D9E75 !important;
+}
+/* Footer description fix */
+.footer-container {
+    grid-template-columns: 2fr 1fr 1fr !important;
+}
+.footer-section p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.6;
+}
+.about-card .icon {
+    font-size: 48px;
+    color: #1D9E75;
+    margin-bottom: 15px;
+}
+.about-card .icon i {
+    background: linear-gradient(135deg, #4A90D9, #5BC0A8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+/* Dropdown links - hiq rrathet */
+.dropdown a {
+    display: block;
+    padding: 10px 12px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: none !important;
+}
+
+.dropdown a::before,
+.dropdown a::after {
+    display: none !important;
+}
+
+/* Hover efekt neon */
+.dropdown a:hover {
+    background: rgba(29, 158, 117, 0.15) !important;
+    color: #5BC0A8 !important;
+    box-shadow: 0 0 12px rgba(91, 192, 168, 0.4);
+    transform: translateX(3px);
+}
+
+.dropdown a.logout:hover {
+    background: rgba(220, 53, 69, 0.15) !important;
+    color: #ff6b6b !important;
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+}
+/* Dropdown links - tekst neon vetem */
+.dropdown a {
+    display: block;
+    padding: 10px 12px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.dropdown a:hover {
+    background: none !important;
+    color: #5BC0A8 !important;
+    text-shadow: 0 0 8px rgba(91, 192, 168, 0.7);
+    transform: translateX(3px);
+    box-shadow: none !important;
+}
+
+.dropdown a.logout:hover {
+    color: #ff6b6b !important;
+    text-shadow: 0 0 8px rgba(255, 107, 107, 0.7);
+    background: none !important;
+}
+/* Dropdown - ngjyeimi i opsioneve te dashboard */
+.dropdown a,
+.dropdown a:hover,
+.dropdown a:focus,
+.dropdown a:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    transform: none !important;
+}
+
+.dropdown a {
+    display: block;
+    padding: 8px 12px;
+    color: #fff !important;
+    text-decoration: none;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.dropdown a:hover {
+    color: #5BC0A8 !important;
+    text-shadow: 0 0 10px rgba(91, 192, 168, 0.8), 0 0 20px rgba(91, 192, 168, 0.4);
+}
+
+.dropdown a.logout:hover {
+    color: #ff6b6b !important;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 0 0 20px rgba(255, 107, 107, 0.4);
+}

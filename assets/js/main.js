@@ -17,11 +17,19 @@
     });
 
     $('.modal-close').on('click', function () {
-        $(this).closest('.modal').fadeOut();
-    });
-    $('.modal').on('click', function (e) {
-        if ($(e.target).hasClass('modal')) $(this).fadeOut();
-    });
+    var $modal = $(this).closest('.modal');
+    $modal.fadeOut();
+    $modal.find('form')[0]?.reset();
+    $modal.find('.error-msg').hide();
+});
+$('.modal').on('click', function (e) {
+    if ($(e.target).hasClass('modal')) {
+        var $modal = $(this);
+        $modal.fadeOut();
+        $modal.find('form')[0]?.reset();
+        $modal.find('.error-msg').hide();
+    }
+});
     $('#showRegister').on('click', function (e) {
         e.preventDefault();
         $('#loginModal').hide();

@@ -25,7 +25,7 @@
             </div>
 
             <button type="submit" class="btn-primary">
-                Gjurmo Paketën
+                Gjurmo Paketen
             </button>
 
         </form>
@@ -86,22 +86,22 @@
 
         <div class="about-grid">
             <div class="about-card">
-                <div class="icon">📦</div>
+                <div class="icon"><i class="fa-solid fa-truck-fast"></i></div>
                 <h3>Dergim i Shpejte</h3>
-                <p>Dergo pako brenda dhe jashte vendit me kosto te ulet dhe te transparente.</p>
+                <p>Dergo pako brenda dhe jashte vendit me kosto te ulet.</p>
             </div>
             <div class="about-card">
-                <div class="icon">🔍</div>
+                <div class="icon"><i class="fa-solid fa-magnifying-glass-location"></i></div>
                 <h3>Gjurmim ne Kohe Reale</h3>
                 <p>Ndiq statusin e pakos tuaj ne çdo moment me kodin unik te gjurmimit.</p>
             </div>
             <div class="about-card">
-                <div class="icon">💳</div>
+                <div class="icon"><i class="fa-solid fa-credit-card"></i></div>
                 <h3>Pagese Online</h3>
                 <p>Paguaj sigurte me PayPal direkt nga platforma jone.</p>
             </div>
             <div class="about-card">
-                <div class="icon">📧</div>
+                <div class="icon"><i class="fa-solid fa-bell"></i></div>
                 <h3>Njoftime Automatike</h3>
                 <p>Merr email per cdo ndryshim statusi te pakos suaj.</p>
             </div>

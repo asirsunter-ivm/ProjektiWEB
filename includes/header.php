@@ -21,7 +21,7 @@
 
         <a href="index.php" class="nav-logo">
 
-            <i class="fa-solid fa-box"></i>
+            <i class="fa-solid fa-box-open"></i>
 
             <span>PostaWeb</span>
 
@@ -34,7 +34,7 @@
 
             <li>
 
-                <a href="#hero">
+                <a href="index.php#hero">
 
                     <i class="fa-solid fa-house"></i>
 
@@ -46,7 +46,7 @@
 
             <li>
 
-                <a href="#about">
+                <a href="index.php#about">
 
                     <i class="fa-solid fa-circle-info"></i>
 
@@ -56,7 +56,7 @@
 
             <li>
 
-                <a href="#contact">
+                <a href="index.php#contact">
 
                     <i class="fa-solid fa-envelope"></i>
 

@@ -33,5 +33,5 @@ $stmt->execute([$userId, $name, $email, $rating, $message]);
 
 echo json_encode([
     'success' => true,
-    'message' => 'Faleminderit per vleresimin! Do shfaqet pas moderimit.'
+    'message' => 'Faleminderit per vleresimin!'
 ]);
