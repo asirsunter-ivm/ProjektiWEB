@@ -97,6 +97,9 @@
                         Dashboard
 
                     </a>
+<?php if ($_SESSION['role'] !== 'admin'): ?>
+<a href="profile.php">Profili Im</a>
+<?php endif; ?>
 
                     <a href="api/auth/logout.php" class="logout">
 

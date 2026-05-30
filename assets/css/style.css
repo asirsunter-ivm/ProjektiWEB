@@ -1197,3 +1197,71 @@ textarea {
     text-align: center;
     font-weight: bold;
 }
+
+.profile-container {
+    max-width: 1200px;
+    margin: 50px auto;
+     padding: 60px 20px 20px 20px;
+}
+.profile-container h1 {
+    margin-bottom: 30px;
+    color: #1F4E79;
+}
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.profile-card {
+    background: rgba(31, 78, 121, 0.15);
+    border: 1px solid rgba(91, 192, 168, 0.3);
+    padding: 30px;
+    border-radius: 12px;
+}
+.profile-card h2 {
+    color: #5BC0A8;
+    margin-bottom: 20px;
+}
+.profile-card input {
+    color: #333 !important;
+    background: white !important;
+}
+.profile-card input:disabled {
+    background: #f0f0f0 !important;
+    color: #999 !important;
+}
+.msg {
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+@media (max-width: 768px) {
+    .profile-grid { grid-template-columns: 1fr; }
+}
+
+.password-wrapper {
+    position: relative;
+}
+.password-wrapper input {
+    padding-right: 40px !important;
+    width: 100%;
+}
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+.toggle-password:hover {
+    color: #1F4E79;
+}
+
+.dropdown {
+    min-width: 180px !important;
+}
+.dropdown a {
+    white-space: nowrap;
+}

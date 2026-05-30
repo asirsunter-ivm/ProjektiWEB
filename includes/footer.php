@@ -34,9 +34,12 @@
                 <input type="email" name="email" required>
             </div>
             <div class="form-group">
-                <label>Fjalekalimi</label>
-                <input type="password" name="password" required>
-            </div>
+    <label>Fjalekalimi</label>
+    <div class="password-wrapper">
+        <input type="password" name="password" required>
+        <i class="fa-solid fa-eye toggle-password"></i>
+    </div>
+</div>
             <p id="loginError" class="error-msg" style="display:none;"></p>
             <button type="submit" class="btn-primary">Hyr</button>
         </form>
@@ -64,9 +67,12 @@
                 <input type="text" name="phone">
             </div>
             <div class="form-group">
-                <label>Fjalekalimi</label>
-                <input type="password" name="password" required minlength="8">
-            </div>
+    <label>Fjalekalimi (min 8 karaktere)</label>
+    <div class="password-wrapper">
+        <input type="password" name="password" required minlength="8">
+        <i class="fa-solid fa-eye toggle-password"></i>
+    </div>
+</div>
             <p id="registerError" class="error-msg" style="display:none;"></p>
             <button type="submit" class="btn-primary">Regjistrohu</button>
         </form>
