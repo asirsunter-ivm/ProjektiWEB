@@ -65,21 +65,36 @@ $('.modal').on('click', function (e) {
     });
 
     $('#trackForm').on('submit', function (e) {
-        e.preventDefault();
-        var tn = $(this).find('input[name="tracking_code"]').val().trim();
-        if (!tn) { alert('Ju lutem fusni nje kod tracking.'); return; }
-        $.getJSON('api/packages/track.php?tn=' + encodeURIComponent(tn), function (res) {
-            if (!res.success) { alert(res.message); return; }
-            $('#trackingProgress').show();
-            $('.progress-step .circle').css({'background': '#ddd', 'color': '#666'});
-            var statusMap = {'created': 1, 'picked_up': 2, 'in_transit': 3, 'out_for_delivery': 4, 'delivered': 6};
-            var stepNum = statusMap[res.package.current_status] || 1;
-            $('.progress-step').each(function(i) {
-                if (i + 1 <= stepNum) $(this).find('.circle').css({'background': '#1D9E75', 'color': 'white'});
-            });
-            alert('Kodi: ' + res.package.tracking_code + '\nStatusi: ' + res.package.status_label + '\nDergues: ' + res.package.sender_name + '\nDestinatar: ' + res.package.receiver_name);
+    e.preventDefault();
+    var tn = $(this).find('input[name="tracking_code"]').val().trim();
+    if (!tn) { alert('Ju lutem vendosni nje kod tracking.'); return; }
+
+    $.getJSON('api/packages/track.php?tn=' + encodeURIComponent(tn), function (res) {
+        if (!res.success) {
+            $('#trackResult').addClass('error-result').html('<p>' + res.message + '</p>').fadeIn();
+            $('#trackingProgress').hide();
+            return;
+        }
+
+        $('#trackResult').removeClass('error-result');
+        $('#trackingProgress').show();
+        $('.progress-step .circle').css({'background': '#ddd', 'color': '#666'});
+
+        var statusMap = {'created': 1, 'picked_up': 2, 'in_transit': 3, 'out_for_delivery': 4, 'delivered': 6};
+        var stepNum = statusMap[res.package.current_status] || 1;
+        $('.progress-step').each(function(i) {
+            if (i + 1 <= stepNum) $(this).find('.circle').css({'background': '#1D9E75', 'color': 'white'});
         });
+
+        var html = '<h3 style="color:#5BC0A8;margin-bottom:15px;">Pakoja: ' + res.package.tracking_code + '</h3>';
+        html += '<p><strong>Statusi:</strong> ' + res.package.status_label + '</p>';
+        html += '<p><strong>Dergues:</strong> ' + res.package.sender_name + '</p>';
+        html += '<p><strong>Destinacioni:</strong> ' + res.package.receiver_name + '</p>';
+        html += '<p><strong>Nga:</strong> ' + res.package.sender_city + ' → <strong>Per:</strong> ' + res.package.receiver_city + '</p>';
+        html += '<p><strong>Krijuar:</strong> ' + res.package.created_at + '</p>';
+        $('#trackResult').html(html).fadeIn();
     });
+});
 
     $('#contactForm').on('submit', function (e) {
         e.preventDefault();

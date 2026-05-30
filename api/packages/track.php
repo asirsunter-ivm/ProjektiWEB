@@ -12,7 +12,7 @@ if (empty($tracking)) {
 }
 
 if (!preg_match('/^PW[A-Z0-9]+$/', $tracking)) {
-    echo json_encode(['success' => false, 'message' => 'Format i pavlefshem.']);
+    echo json_encode(['success' => false, 'message' => 'Kodi vendosur eshte i pavlefshem.']);
     exit;
 }
 

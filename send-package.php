@@ -18,13 +18,13 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="send-package-container">
-    <h1>ðŸ“¦ Dergo nje Pako</h1>
+    <h1>Dergoni pakon tuaj</h1>
     <p class="subtitle">Plotesoni te dhenat dhe paguani per te krijuar pakon</p>
 
     <!-- STEPS INDICATOR -->
     <div class="steps-indicator">
         <div class="step-bar active" data-step="1"><span>1</span> Dergues</div>
-        <div class="step-bar" data-step="2"><span>2</span> Destinatar</div>
+        <div class="step-bar" data-step="2"><span>2</span> Destinacion</div>
         <div class="step-bar" data-step="3"><span>3</span> Pakoja</div>
         <div class="step-bar" data-step="4"><span>4</span> Pagese</div>
     </div>
@@ -52,13 +52,13 @@ require_once __DIR__ . '/includes/header.php';
                 </select>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-next">Vazhdo â†’</button>
+                <button type="button" class="btn-next">Vazhdo</button>
             </div>
         </div>
 
         <!-- STEP 2: RECEIVER -->
         <div class="form-step" data-step="2">
-            <h2>2. Te Dhenat e Destinatarit</h2>
+            <h2>2. Te Dhenat e Destinacionit</h2>
             <div class="form-group">
                 <label>Emri i plote *</label>
                 <input type="text" name="receiver_name" required>
@@ -85,8 +85,8 @@ require_once __DIR__ . '/includes/header.php';
                 </select>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-prev">â† Kthehu</button>
-                <button type="button" class="btn-next">Vazhdo â†’</button>
+                <button type="button" class="btn-prev">Kthehu pas</button>
+                <button type="button" class="btn-next">Vazhdo</button>
             </div>
         </div>
 
@@ -117,8 +117,8 @@ require_once __DIR__ . '/includes/header.php';
                 <textarea name="description" rows="3"></textarea>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn-prev">â† Kthehu</button>
-                <button type="button" class="btn-next">Vazhdo â†’</button>
+                <button type="button" class="btn-prev">Kthehu pas</button>
+                <button type="button" class="btn-next">Vazhdo</button>
             </div>
         </div>
 
@@ -129,13 +129,13 @@ require_once __DIR__ . '/includes/header.php';
             <div id="summaryBox" class="summary-box"></div>
 
             <div id="paymentSection" style="display:none;">
-                <h3>ðŸ’³ Paguaj me PayPal</h3>
+                <h3>Paguaj me PayPal</h3>
                 <div id="paypal-button-container"></div>
                 <p id="paymentMsg" class="success-msg" style="display:none;"></p>
             </div>
 
             <div class="form-actions" id="createActions">
-                <button type="button" class="btn-prev">â† Kthehu</button>
+                <button type="button" class="btn-prev">Kthehu pas</button>
                 <button type="button" id="createPackageBtn" class="btn-primary">Krijo Pakon</button>
             </div>
         </div>

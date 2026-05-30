@@ -21,16 +21,17 @@
 
             <div class="form-group">
                
-                <input type="text" name="tracking_code" placeholder="p.sh. PW123456" required>
+               <input type="text" name="tracking_code" placeholder="p.sh. PW123456" required oninvalid="this.setCustomValidity('Ju lutem vendosni kodin e pakos tuaj.')" oninput="this.setCustomValidity('')">
             </div>
 
             <button type="submit" class="btn-primary">
-                Gjurmo Paketen
+                Gjurmo Pakon
             </button>
 
         </form>
-
-        <div id="trackingProgress" class="tracking-progress" style="display:none; margin-top:30px;">
+	<div id="trackResult" style="display:none; margin-top:30px; background:white; 	border-radius:12px; padding:25px; box-shadow:0 4px 20px rgba(0,0,0,0.1); text-	align:left; color:#333; max-width:800px; margin-left:auto; margin-right:auto;">	</div>
+        
+	<div id="trackingProgress" class="tracking-progress" style="display:none !important; margin-top:30px;">
 
             <div class="progress-step">
                 <div class="circle">1</div>

@@ -67,7 +67,7 @@ $pdf->MultiCell(85, 4,
     ($pkg['sender_city'] ?: '-') . ', ' . ($pkg['sender_country'] ?: '-'),
     1, 'L');
 
-$pdf->Image($qrPath, 100, 12, 40, 40);
+$pdf->Image($qrPath, 100, 50, 40, 40);
 
 $pdf->Ln(2);
 $pdf->SetFont('helvetica', 'B', 10);

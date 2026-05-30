@@ -36,7 +36,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="dashboard-container">
-    <h1>Mireseardhja, <?= htmlspecialchars($_SESSION['full_name']) ?>!</h1>
+    <h1 style="margin-top: 40px;">Mireserdhe, <?= htmlspecialchars($_SESSION['full_name']) ?>!</h1>
 
     <div class="stats-grid">
         <div class="stat-card">
@@ -85,7 +85,7 @@ require_once __DIR__ . '/includes/header.php';
             <thead>
                 <tr>
                     <th>Kodi</th>
-                    <th>Destinatari</th>
+                    <th>Destinacioni</th>
                     <th>Tipi</th>
                     <th>Pesha</th>
                     <th>Kosto</th>
